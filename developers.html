@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Developer Partners | Castlerock Econetwork Africa (CEA)</title>
+<meta name="description" content="Browse all CEA Verified real estate developer and agency partners listing properties across Nigeria. Every developer is vetted before joining the platform." />
+<meta name="keywords" content="real estate developers Nigeria, property developers Lagos, CEA partner developer, verified property companies Nigeria" />
+<link rel="canonical" href="https://ceagroup.org/developers.html" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Developer Partners | CEA" />
+<meta property="og:description" content="Browse all CEA Verified real estate developer and agency partners listing properties across Nigeria." />
+<meta property="og:url" content="https://ceagroup.org/developers.html" />
+<meta property="og:image" content="https://ceagroup.org/og-image.jpg" />
+<meta property="og:site_name" content="Castlerock Econetwork Africa" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Developer Partners | CEA" />
+<meta name="twitter:image" content="https://ceagroup.org/og-image.jpg" />
+<link rel="icon" href="logo.jpg" type="image/jpeg" />
+<link rel="stylesheet" href="style.css" />
+<style>
+  /* ── Hero ─────────────────────────────────────────────────────── */
+  .devdir-hero {
+    background: linear-gradient(135deg, #11214f 0%, #0a1733 60%, #0c1f14 100%);
+    padding: 64px 0 56px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .devdir-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+  .devdir-hero .container { position: relative; }
+  .devdir-eyebrow {
+    display: inline-block;
+    background: rgba(31,157,85,0.18);
+    border: 1px solid rgba(31,157,85,0.4);
+    color: #2bbf68;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+  .devdir-hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin: 0 0 14px; text-wrap: balance; }
+  .devdir-hero h1 span { color: #2bbf68; }
+  .devdir-hero p { font-size: 15px; color: rgba(255,255,255,0.7); max-width: 520px; margin: 0 auto; line-height: 1.6; }
+
+  /* ── Trust strip ──────────────────────────────────────────────── */
+  .devdir-trust {
+    background: #fff;
+    border-bottom: 1px solid #e3e7ed;
+    padding: 18px 0;
+  }
+  .devdir-trust-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .devdir-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cea-muted);
+  }
+  .devdir-trust-icon { color: var(--cea-green); font-size: 16px; }
+
+  /* ── Developer cards grid ─────────────────────────────────────── */
+  .devdir-section { padding: 48px 0 72px; }
+  .devdir-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .devdir-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e3e7ed;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.18s, box-shadow 0.18s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .devdir-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(17,33,79,0.12); }
+  .devdir-card-cover {
+    height: 120px;
+    background: linear-gradient(135deg, #11214f, #0a1733);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .devdir-card-cover img { width: 100%; height: 100%; object-fit: cover; }
+  .devdir-card-logo-wrap {
+    position: absolute;
+    bottom: -28px;
+    left: 20px;
+  }
+  .devdir-card-logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    border: 3px solid #fff;
+    background: #fff;
+    object-fit: contain;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    display: block;
+  }
+  .devdir-card-logo-placeholder {
+    width: 56px;
+    height: 56px;
+    border-radius: 10px;
+    border: 3px solid #fff;
+    background: var(--cea-green);
+    color: #fff;
+    font-size: 22px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  }
+  .devdir-card-body {
+    padding: 42px 20px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .devdir-card-name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .devdir-card-name { font-size: 15px; font-weight: 800; color: var(--cea-navy); margin: 0; line-height: 1.2; }
+  .devdir-card-partner-badge {
+    background: rgba(31,157,85,0.1);
+    border: 1px solid rgba(31,157,85,0.3);
+    color: var(--cea-green);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .devdir-card-location { font-size: 12.5px; color: var(--cea-muted); margin-bottom: 8px; }
+  .devdir-card-desc {
+    font-size: 13px;
+    color: var(--cea-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .devdir-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #f0f2f5;
+    padding-top: 14px;
+    margin-top: auto;
+  }
+  .devdir-card-count {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cea-navy);
+  }
+  .devdir-card-count span { color: var(--cea-green); font-size: 1.1em; }
+  .devdir-card-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cea-green);
+    text-decoration: none;
+  }
+  .devdir-card-link:hover { text-decoration: underline; }
+
+  /* skeleton */
+  .devdir-skeleton-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #e3e7ed;
+    overflow: hidden;
+  }
+  .devdir-skeleton-cover { height: 120px; }
+
+  /* ── Become a partner strip ───────────────────────────────────── */
+  .devdir-partner-strip {
+    background: var(--cea-navy);
+    color: #fff;
+    padding: 56px 0;
+    text-align: center;
+  }
+  .devdir-partner-strip h2 { font-size: 1.6rem; font-weight: 800; margin: 0 0 10px; }
+  .devdir-partner-strip p { font-size: 15px; color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 auto 28px; }
+  .devdir-partner-strip ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto 32px;
+    display: inline-flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .devdir-partner-strip ul li {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.75);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .devdir-partner-strip ul li::before { content: '✓'; color: #2bbf68; font-weight: 800; }
+  .devdir-partner-cta {
+    display: inline-block;
+    padding: 15px 36px;
+    background: var(--cea-green);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background 0.18s, transform 0.12s;
+  }
+  .devdir-partner-cta:hover { background: #1a8f4a; transform: translateY(-1px); }
+  .devdir-partner-note { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 14px; }
+
+  @media (max-width: 560px) {
+    .devdir-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="promoBanner"></div>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="logo.jpg" alt="CEA Logo" />
+      <span class="brand-name">
+        <strong>Castlerock Econetwork Africa</strong>
+        <span>Invest in Africa's Sustainable Future</span>
+      </span>
+    </a>
+    <nav class="site-nav">
+      <div class="nav-links" id="navLinks">
+        <a href="properties.html">Properties</a>
+        <a href="developers.html" aria-current="page">Developers</a>
+        <a href="index.html#how-it-works">How It Works</a>
+        <a href="index.html#trust">Why CEA</a>
+        <a href="listing.html" class="nav-cta">List Your Property</a>
+      </div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <section class="devdir-hero">
+    <div class="container">
+      <span class="devdir-eyebrow">CEA Partner Network</span>
+      <h1>Developer <span>&amp; Agency Partners</span></h1>
+      <p>Every partner on this page has been vetted by CEA. Their listings are title-checked and verified before going live.</p>
+    </div>
+  </section>
+
+  <!-- Trust strip -->
+  <div class="devdir-trust">
+    <div class="container">
+      <div class="devdir-trust-inner">
+        <div class="devdir-trust-item"><span class="devdir-trust-icon">&#10003;</span> All developers are CEA vetted</div>
+        <div class="devdir-trust-item"><span class="devdir-trust-icon">&#10003;</span> Every listing is title-checked</div>
+        <div class="devdir-trust-item"><span class="devdir-trust-icon">&#10003;</span> GPS boundary verified</div>
+        <div class="devdir-trust-item"><span class="devdir-trust-icon">&#10003;</span> Escrow-protected transactions</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Developer grid -->
+  <section class="devdir-section">
+    <div class="container">
+      <div class="devdir-grid" id="developerGrid" aria-live="polite" aria-label="Developer partners"></div>
+      <div class="pagination" id="developerPagination" role="navigation" aria-label="Pagination"></div>
+    </div>
+  </section>
+
+  <!-- Become a partner -->
+  <section class="devdir-partner-strip">
+    <div class="container">
+      <h2>List Your Portfolio with CEA</h2>
+      <p>Real estate companies with 20+ properties get a dedicated partner page on the CEA marketplace  at no extra cost.</p>
+      <ul>
+        <li>Dedicated partner profile page</li>
+        <li>All listings on the main marketplace</li>
+        <li>CEA Verified badge on every property</li>
+        <li>Promoted to serious, identity-verified buyers</li>
+      </ul>
+      <a href="listing.html" class="devdir-partner-cta">Start Listing Your Properties</a>
+      <p class="devdir-partner-note">Contact us at <a href="mailto:info@ceagroup.org" style="color:rgba(255,255,255,0.6);">info@ceagroup.org</a> to discuss a bulk partnership agreement.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="logo.jpg" alt="CEA Logo" />
+        <strong>Castlerock Econetwork Africa</strong>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:info@ceagroup.org">info@ceagroup.org</a>
+        <a href="https://www.ceagroup.org">www.ceagroup.org</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Castlerock Econetwork Africa Ltd. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script src="promoconfig.js"></script>
+<script src="promobanner.js"></script>
+<script src="mobilenav.js"></script>
+<script>
+(function () {
+  var WORKER_BASE_URL = "https://cea-listing-worker.ceafricaorg.workers.dev";
+  var PAGE_SIZE = 12;
+  var allDevelopers = [];
+  var currentPage = 1;
+
+  var gridEl = document.getElementById("developerGrid");
+  var paginEl = document.getElementById("developerPagination");
+
+  function escHtml(str) {
+    return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+  }
+
+  function showSkeletons() {
+    if (!gridEl) return;
+    var html = "";
+    for (var i = 0; i < 6; i++) {
+      html +=
+        '<div class="devdir-skeleton-card">' +
+          '<div class="skeleton skeleton-photo devdir-skeleton-cover"></div>' +
+          '<div class="skeleton-body" style="padding:42px 20px 20px;">' +
+            '<div class="skeleton skeleton-line short" style="height:18px;margin-bottom:8px;"></div>' +
+            '<div class="skeleton skeleton-line short" style="height:14px;width:60%;margin-bottom:12px;"></div>' +
+            '<div class="skeleton skeleton-line" style="height:50px;margin-bottom:16px;"></div>' +
+            '<div class="skeleton skeleton-line short" style="height:14px;"></div>' +
+          '</div>' +
+        '</div>';
+    }
+    gridEl.innerHTML = html;
+  }
+
+  function renderCard(dev) {
+    var url = "developer.html?id=" + encodeURIComponent(dev.id || "");
+    var coverHtml = dev.coverPhoto
+      ? '<img src="' + escHtml(dev.coverPhoto) + '" alt="" loading="lazy" />'
+      : "";
+    var logoHtml = dev.logo
+      ? '<img src="' + escHtml(dev.logo) + '" alt="' + escHtml(dev.name) + '" class="devdir-card-logo" />'
+      : '<div class="devdir-card-logo-placeholder">' + escHtml((dev.name || "?")[0].toUpperCase()) + '</div>';
+
+    var desc = (dev.description || "").substring(0, 160);
+
+    return (
+      '<a href="' + url + '" class="devdir-card">' +
+        '<div class="devdir-card-cover">' +
+          coverHtml +
+          '<div class="devdir-card-logo-wrap">' + logoHtml + '</div>' +
+        '</div>' +
+        '<div class="devdir-card-body">' +
+          '<div class="devdir-card-name-row">' +
+            '<h3 class="devdir-card-name">' + escHtml(dev.name || "") + '</h3>' +
+            (dev.verified ? '<span class="devdir-card-partner-badge">&#10003; CEA Partner</span>' : '') +
+          '</div>' +
+          (dev.location ? '<div class="devdir-card-location">&#128205; ' + escHtml(dev.location) + '</div>' : '') +
+          (desc ? '<p class="devdir-card-desc">' + escHtml(desc) + '</p>' : '') +
+          '<div class="devdir-card-footer">' +
+            '<span class="devdir-card-count"><span>' + (dev.totalListings || 0) + '</span> Propert' + ((dev.totalListings || 0) === 1 ? 'y' : 'ies') + '</span>' +
+            '<span class="devdir-card-link">View all &#8594;</span>' +
+          '</div>' +
+        '</div>' +
+      '</a>'
+    );
+  }
+
+  function renderGrid() {
+    if (!gridEl) return;
+    if (!allDevelopers.length) {
+      gridEl.innerHTML =
+        '<div class="no-results" style="grid-column:1/-1;">' +
+          '<div class="no-results-icon">&#127968;</div>' +
+          '<h3>No developer partners yet</h3>' +
+          '<p>We\'re actively onboarding real estate companies. Check back soon.</p>' +
+        '</div>';
+      if (paginEl) paginEl.innerHTML = "";
+      return;
+    }
+    var start = (currentPage - 1) * PAGE_SIZE;
+    var pageItems = allDevelopers.slice(start, start + PAGE_SIZE);
+    gridEl.innerHTML = pageItems.map(renderCard).join("");
+    renderPagination();
+  }
+
+  function renderPagination() {
+    if (!paginEl) return;
+    var totalPages = Math.ceil(allDevelopers.length / PAGE_SIZE);
+    if (totalPages <= 1) { paginEl.innerHTML = ""; return; }
+    var html = '<button class="page-btn" id="devdirPrev"' + (currentPage === 1 ? " disabled" : "") + '>&laquo; Prev</button>';
+    for (var p = 1; p <= totalPages; p++) {
+      html += '<button class="page-btn' + (p === currentPage ? " active" : "") + '" data-page="' + p + '">' + p + '</button>';
+    }
+    html += '<button class="page-btn" id="devdirNext"' + (currentPage === totalPages ? " disabled" : "") + '>Next &raquo;</button>';
+    paginEl.innerHTML = html;
+    var prev = document.getElementById("devdirPrev");
+    var next = document.getElementById("devdirNext");
+    if (prev) prev.addEventListener("click", function () { if (currentPage > 1) { currentPage--; renderGrid(); gridEl.scrollIntoView({behavior:"smooth"}); } });
+    if (next) next.addEventListener("click", function () { if (currentPage < totalPages) { currentPage++; renderGrid(); gridEl.scrollIntoView({behavior:"smooth"}); } });
+    paginEl.querySelectorAll(".page-btn[data-page]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        currentPage = parseInt(this.getAttribute("data-page"), 10);
+        renderGrid();
+        gridEl.scrollIntoView({ behavior: "smooth" });
+      });
+    });
+  }
+
+  function init() {
+    showSkeletons();
+    fetch(WORKER_BASE_URL + "/developers")
+      .then(function (res) {
+        if (!res.ok) throw new Error("Failed");
+        return res.json();
+      })
+      .then(function (data) {
+        allDevelopers = Array.isArray(data) ? data : (data.developers || []);
+        currentPage = 1;
+        renderGrid();
+      })
+      .catch(function () {
+        if (gridEl) {
+          gridEl.innerHTML =
+            '<div class="no-results" style="grid-column:1/-1;">' +
+              '<div class="no-results-icon">&#128683;</div>' +
+              '<h3>Could not load developer profiles</h3>' +
+              '<p>Please refresh the page or try again later.</p>' +
+            '</div>';
+        }
+      });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

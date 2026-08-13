@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Developer Properties | Castlerock Econetwork Africa (CEA)</title>
+<meta name="description" content="Browse all CEA Verified properties from this developer partner." />
+<link rel="canonical" href="https://ceagroup.org/developer.html" />
+<meta name="robots" content="index, follow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Developer Properties | CEA" />
+<meta property="og:description" content="Browse all CEA Verified properties from this developer partner." />
+<meta property="og:url" content="https://ceagroup.org/developer.html" />
+<meta property="og:image" content="https://ceagroup.org/og-image.jpg" />
+<meta property="og:site_name" content="Castlerock Econetwork Africa" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Developer Properties | CEA" />
+<meta name="twitter:image" content="https://ceagroup.org/og-image.jpg" />
+<link rel="icon" href="logo.jpg" type="image/jpeg" />
+<link rel="stylesheet" href="style.css" />
+<style>
+  /* ── Developer hero ───────────────────────────────────────────── */
+  .dev-hero-wrap {
+    background: var(--cea-navy);
+    position: relative;
+  }
+  .dev-cover {
+    height: 220px;
+    background: linear-gradient(135deg, #11214f, #0a1733);
+    position: relative;
+  }
+  .dev-cover-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(10,23,51,0.3) 0%, rgba(10,23,51,0.75) 100%);
+  }
+  .dev-profile-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 0 0 28px;
+    flex-wrap: wrap;
+  }
+  .dev-logo-wrap {
+    flex-shrink: 0;
+    margin-top: -48px;
+    z-index: 2;
+    position: relative;
+  }
+  .dev-logo-img {
+    width: 96px;
+    height: 96px;
+    border-radius: 14px;
+    border: 4px solid #fff;
+    object-fit: contain;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .dev-logo-placeholder {
+    width: 96px;
+    height: 96px;
+    border-radius: 14px;
+    border: 4px solid #fff;
+    background: var(--cea-green);
+    color: #fff;
+    font-size: 36px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .dev-profile-info { flex: 1; padding-top: 16px; min-width: 0; }
+  .dev-name-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+  .dev-name {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .dev-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--cea-green);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .dev-tagline { font-size: 14px; color: rgba(255,255,255,0.72); margin: 0 0 14px; }
+  .dev-stats-row { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 14px; }
+  .dev-stat { text-align: left; }
+  .dev-stat-val { font-size: 1.1rem; font-weight: 800; color: #fff; display: block; line-height: 1; }
+  .dev-stat-label { font-size: 11px; color: rgba(255,255,255,0.55); font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; display: block; }
+  .dev-social-row { display: flex; gap: 8px; }
+  .dev-social-link {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.18s, color 0.18s;
+  }
+  .dev-social-link:hover { background: var(--cea-green); color: #fff; border-color: var(--cea-green); }
+
+  /* contact card (right side) */
+  .dev-contact-card {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 18px 20px;
+    min-width: 200px;
+    margin-top: 16px;
+    flex-shrink: 0;
+  }
+  .dev-contact-title { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 10px; }
+  .dev-contact-link {
+    display: block;
+    font-size: 13px;
+    color: rgba(255,255,255,0.82);
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: color 0.15s;
+  }
+  .dev-contact-link:hover { color: var(--cea-green-light); }
+  .dev-contact-link:last-child { margin-bottom: 0; }
+
+  /* description band */
+  .dev-description {
+    background: rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 18px 0;
+    margin-top: 4px;
+  }
+  .dev-description p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    margin: 0;
+    line-height: 1.65;
+    max-width: 800px;
+  }
+
+  /* ── Listings section ─────────────────────────────────────────── */
+  .dev-listings-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding-top: 40px;
+  }
+  .dev-listings-title { font-size: 1.3rem; font-weight: 800; color: var(--cea-navy); margin: 0; }
+  .dev-listing-count {
+    background: var(--cea-green);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* ── Skeleton loaders ─────────────────────────────────────────── */
+  .dev-skeleton-hero {
+    background: var(--cea-navy);
+    padding-bottom: 28px;
+  }
+  .dev-skeleton-cover {
+    height: 220px;
+    background: linear-gradient(90deg, #1a2e52 0%, #243a65 50%, #1a2e52 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+  }
+  .dev-skeleton-profile {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    padding: 0 20px;
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+  .dev-skeleton-logo {
+    width: 96px; height: 96px;
+    border-radius: 14px;
+    border: 4px solid #fff;
+    margin-top: -48px;
+    background: linear-gradient(90deg, #1a2e52 0%, #243a65 50%, #1a2e52 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    flex-shrink: 0;
+  }
+  .dev-skeleton-info { flex: 1; padding-top: 16px; }
+  .dev-skeleton-line { border-radius: 6px; margin-bottom: 10px; background: linear-gradient(90deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.14) 50%, rgba(255,255,255,0.08) 100%); background-size: 200% 100%; animation: shimmer 1.4s infinite; }
+
+  @media (max-width: 680px) {
+    .dev-cover { height: 140px; }
+    .dev-logo-img, .dev-logo-placeholder { width: 72px; height: 72px; border-width: 3px; }
+    .dev-logo-wrap { margin-top: -36px; }
+    .dev-name { font-size: 1.3rem; }
+    .dev-contact-card { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="promoBanner"></div>
+
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="logo.jpg" alt="CEA Logo" />
+      <span class="brand-name">
+        <strong>Castlerock Econetwork Africa</strong>
+        <span>Invest in Africa's Sustainable Future</span>
+      </span>
+    </a>
+    <nav class="site-nav">
+      <div class="nav-links" id="navLinks">
+        <a href="properties.html">Properties</a>
+        <a href="developers.html">Developers</a>
+        <a href="index.html#how-it-works">How It Works</a>
+        <a href="index.html#trust">Why CEA</a>
+        <a href="listing.html" class="nav-cta">List Your Property</a>
+      </div>
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Breadcrumb -->
+  <div style="background:#fff;border-bottom:1px solid #e3e7ed;padding:10px 0;">
+    <div class="container" style="font-size:13px;color:var(--cea-muted);">
+      <a href="properties.html" style="color:var(--cea-green);text-decoration:none;font-weight:600;">Properties</a>
+      <span style="margin:0 8px;">&#8250;</span>
+      <a href="developers.html" style="color:var(--cea-green);text-decoration:none;font-weight:600;">Developer Partners</a>
+      <span style="margin:0 8px;">&#8250;</span>
+      <span id="breadcrumbName">Developer</span>
+    </div>
+  </div>
+
+  <!-- Skeleton shown while loading -->
+  <div id="devSkeleton">
+    <div class="dev-skeleton-hero">
+      <div class="dev-skeleton-cover"></div>
+      <div class="dev-skeleton-profile">
+        <div class="dev-skeleton-logo"></div>
+        <div class="dev-skeleton-info">
+          <div class="dev-skeleton-line" style="width:260px;height:28px;margin-top:20px;"></div>
+          <div class="dev-skeleton-line" style="width:180px;height:16px;"></div>
+          <div class="dev-skeleton-line" style="width:120px;height:14px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="padding-top:40px;padding-bottom:64px;">
+      <div class="dev-listings-header">
+        <div class="skeleton skeleton-line short" style="width:180px;height:24px;"></div>
+      </div>
+      <div class="property-grid">
+        <div class="skeleton-card"><div class="skeleton skeleton-photo"></div><div class="skeleton-body"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-photo"></div><div class="skeleton-body"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-photo"></div><div class="skeleton-body"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Real content injected by developer.js -->
+  <div id="devContent" style="display:none;">
+    <div class="dev-hero-wrap" id="devHero"></div>
+    <div class="container" style="padding-bottom:64px;">
+      <div class="dev-listings-header">
+        <h2 class="dev-listings-title">All Listings</h2>
+        <span class="dev-listing-count" id="devListingCount">Loading…</span>
+      </div>
+      <div class="property-grid" id="devGrid" aria-live="polite" aria-label="Developer property listings"></div>
+      <div class="pagination" id="devPagination" role="navigation" aria-label="Pagination"></div>
+    </div>
+  </div>
+
+  <!-- Error / not found rendered directly into devContent by developer.js -->
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="logo.jpg" alt="CEA Logo" />
+        <strong>Castlerock Econetwork Africa</strong>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:info@ceagroup.org">info@ceagroup.org</a>
+        <a href="https://www.ceagroup.org">www.ceagroup.org</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Castlerock Econetwork Africa Ltd. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script src="promoconfig.js"></script>
+<script src="promobanner.js"></script>
+<script src="mobilenav.js"></script>
+<script src="assets/js/booking-modal.js"></script>
+<script src="cea-badges.js"></script>
+<script src="assets/js/developer.js"></script>
+<script>
+  // Update breadcrumb name once developer name is known
+  (function () {
+    var orig = window.__devNameSet;
+    var nameEl = document.getElementById("breadcrumbName");
+    // developer.js sets document.title  we extract from it after load
+    var observer = new MutationObserver(function () {
+      var titleParts = document.title.split(" Properties |");
+      if (nameEl && titleParts[0]) nameEl.textContent = titleParts[0];
+    });
+    observer.observe(document.querySelector("title"), { childList: true });
+  })();
+</script>
+</body>
+</html>
