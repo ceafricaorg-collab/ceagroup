@@ -40,15 +40,6 @@
 
 <link rel="icon" href="logo.jpg" type="image/jpeg" />
 <link rel="stylesheet" href="style.css" />
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-V05C6R8NP3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-V05C6R8NP3');
-</script>
 <style>
   /* ── Properties coming-soon palette ──────────────────────────── */
 
@@ -384,6 +375,7 @@
     <nav class="site-nav">
       <div class="nav-links" id="navLinks">
         <a href="properties.html" aria-current="page">Properties</a>
+        <a href="developers.html">Developers</a>
         <a href="index.html#how-it-works">How It Works</a>
         <a href="index.html#trust">Why CEA</a>
         <a href="listing.html" class="nav-cta">List Your Property</a>
@@ -445,7 +437,7 @@
             <li>Booking tour management</li>
           </ul>
 
-          <a href="list.html" class="pcs-offer-cta" id="offerCta">List My Property Now</a>
+          <a href="listing.html" class="pcs-offer-cta" id="offerCta">List My Property Now</a>
           <p class="pcs-offer-note" id="offerNote">Complete your listing in under 10 minutes. Our team will verify and publish within 48 hours.</p>
         </div>
       </div>
@@ -520,12 +512,26 @@
     </div>
   </section>
 
+  <!-- Developer Partners strip -->
+  <div id="devPartnersStrip" style="display:none;background:#fff;border-top:1px solid #e3e7ed;border-bottom:1px solid #e3e7ed;padding:48px 0;">
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:28px;">
+        <div>
+          <h2 style="font-size:1.3rem;font-weight:800;color:var(--cea-navy);margin:0 0 4px;">Browse by Developer</h2>
+          <p style="font-size:14px;color:var(--cea-muted);margin:0;">Dedicated portfolios from our verified real estate partners.</p>
+        </div>
+        <a href="developers.html" style="font-size:13px;font-weight:700;color:var(--cea-green);text-decoration:none;white-space:nowrap;">View all partners &#8594;</a>
+      </div>
+      <div id="devPartnersGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;"></div>
+    </div>
+  </div>
+
   <!-- Final CTA -->
   <div class="pcs-cta-strip">
     <div class="container">
       <h2>Ready to List?</h2>
       <p>It takes under 10 minutes to submit. Our team handles the rest.</p>
-      <a href="list.html" class="btn-submit" style="display:inline-block;width:auto;padding:15px 36px;font-size:15px;text-decoration:none;">Start Your Free Listing</a>
+      <a href="listing.html" class="btn-submit" style="display:inline-block;width:auto;padding:15px 36px;font-size:15px;text-decoration:none;">Start Your Free Listing</a>
     </div>
   </div>
 
@@ -552,6 +558,40 @@
 <script src="promoconfig.js"></script>
 <script src="promobanner.js"></script>
 <script src="mobilenav.js"></script>
+<script>
+// Load developer partners strip
+(function () {
+  var WORKER_BASE_URL = "https://cea-listing-worker.ceafricaorg.workers.dev";
+  var strip = document.getElementById("devPartnersStrip");
+  var grid = document.getElementById("devPartnersGrid");
+  if (!strip || !grid) return;
+
+  function escHtml(s) { return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+  fetch(WORKER_BASE_URL + "/developers")
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+    .then(function (data) {
+      var devs = (Array.isArray(data) ? data : (data.developers || [])).slice(0, 8);
+      if (!devs.length) return;
+      strip.style.display = "block";
+      grid.innerHTML = devs.map(function (dev) {
+        var logo = dev.logo
+          ? '<img src="' + escHtml(dev.logo) + '" alt="' + escHtml(dev.name) + '" style="width:40px;height:40px;border-radius:8px;object-fit:contain;background:#fff;border:1px solid #e3e7ed;flex-shrink:0;" />'
+          : '<div style="width:40px;height:40px;border-radius:8px;background:var(--cea-green);color:#fff;font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + escHtml((dev.name||"?")[0].toUpperCase()) + '</div>';
+        return (
+          '<a href="developer.html?id=' + encodeURIComponent(dev.id||"") + '" style="display:flex;align-items:center;gap:12px;background:#f6f8f7;border:1px solid #e3e7ed;border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit;transition:box-shadow 0.18s;" onmouseover="this.style.boxShadow=\'0 4px 16px rgba(17,33,79,0.1)\'" onmouseout="this.style.boxShadow=\'\'">' +
+            logo +
+            '<div style="min-width:0;">' +
+              '<div style="font-size:13.5px;font-weight:700;color:var(--cea-navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escHtml(dev.name||"") + '</div>' +
+              '<div style="font-size:12px;color:var(--cea-muted);">' + (dev.totalListings||0) + ' listing' + ((dev.totalListings||0)===1?'':'s') + '</div>' +
+            '</div>' +
+          '</a>'
+        );
+      }).join("");
+    })
+    .catch(function () {});
+})();
+</script>
 <script>
 (function () {
   var promo = window.CEA_PROMO;
