@@ -1,8 +1,11 @@
 (function () {
-  var DEFAULT_CENTER = { lat: 9.082, lng: 8.6753 }; // Nigeria, roughly centered
+  var DEFAULT_CENTER = { lat: 9.082, lng: 8.6753 };
   var map, marker;
+  var mapsApiReady = false;
+  var mapInitialized = false;
 
   function setPin(lat, lng) {
+    if (!map) return;
     var pos = { lat: lat, lng: lng };
     if (!marker) {
       marker = new google.maps.Marker({ position: pos, map: map, draggable: true });
@@ -31,17 +34,20 @@
     if (group) group.classList.remove("has-error");
   }
 
-  // Google Maps fires this callback when the API loads.
-  // Initialise the map now (even though the container is hidden) so the instance is ready.
-  // The container's zero dimensions at this point are fine — ceaShowMap fixes that on reveal.
-  window.initLocationMap = function () {
+  function doInitMap() {
+    if (mapInitialized) return;
+    if (!mapsApiReady) return;
     var mapEl = document.getElementById("locationMap");
     if (!mapEl) return;
+    mapInitialized = true;
 
     map = new google.maps.Map(mapEl, { center: DEFAULT_CENTER, zoom: 6 });
 
-    map.addListener("click", function (e) {
-      setPin(e.latLng.lat(), e.latLng.lng());
+    // Wait for the map to finish its first idle (fully rendered) before wiring click
+    google.maps.event.addListenerOnce(map, "idle", function () {
+      map.addListener("click", function (e) {
+        setPin(e.latLng.lat(), e.latLng.lng());
+      });
     });
 
     var useMyLocationBtn = document.getElementById("useMyLocationBtn");
@@ -64,14 +70,18 @@
         );
       });
     }
+  }
+
+  // Google Maps API is ready — just mark the flag.
+  // Do NOT init here: the container is hidden (display:none) at this point,
+  // so Google Maps would create a zero-size broken instance.
+  window.initLocationMap = function () {
+    mapsApiReady = true;
   };
 
-  // Called by listingform.js after the step-2 container becomes visible.
-  // Trigger resize + setCenter so the map repaints into its now-visible dimensions
-  // and click/marker events work correctly.
+  // Called by listingform.js after step-2 is visible.
+  // Container now has real dimensions — safe to create the map.
   window.ceaShowMap = function () {
-    if (!map) return;
-    google.maps.event.trigger(map, "resize");
-    map.setCenter(DEFAULT_CENTER);
+    doInitMap();
   };
 })();
