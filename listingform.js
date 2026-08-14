@@ -216,11 +216,13 @@
           var step3 = document.getElementById("step3Section");
           if (step2) {
             step2.classList.remove("hidden");
-            // Init the map now that its container is visible (lazy init avoids blank-map bug)
+            // Trigger map resize+recenter once the container is fully visible
             setTimeout(function () {
               if (typeof window.ceaShowMap === "function") window.ceaShowMap();
+            }, 300);
+            setTimeout(function () {
               step2.scrollIntoView({ behavior: "smooth", block: "start" });
-            }, 150);
+            }, 100);
           }
           if (step3) step3.classList.remove("hidden");
 
