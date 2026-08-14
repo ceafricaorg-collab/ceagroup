@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Complete Your Listing | Castlerock Econetwork Africa (CEA)</title>
 <meta name="robots" content="noindex, nofollow" />
-<link rel="icon" href="logo.jpg" type="image/jpeg" />
+<link rel="icon" href="logo.svg" type="image/svg+xml" />
 <link rel="stylesheet" href="style.css" />
 
 <!-- Google tag (gtag.js) - replace G-XXXXXXXXXX with your real GA4 Measurement ID -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-V05C6R8NP3"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-V05C6R8NP3');
+  gtag('config', 'G-XXXXXXXXXX');
 </script>
 
 <!-- Meta Pixel Code - replace YOUR_PIXEL_ID with your real Pixel ID -->
@@ -181,10 +181,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
                   A vNIN is a temporary, shareable version of your NIN that protects your actual
                   NIN number. You can generate one for free in under a minute:
                 </p>
-                <p><strong>Option A  NIMC Mobile App:</strong> Download the NIMC app &rarr;
+                <p><strong>Option A — NIMC Mobile App:</strong> Download the NIMC app &rarr;
                   tap "Get Virtual NIN" &rarr; choose "Input Enterprise short-code" &rarr;
                   enter <strong>715461</strong> &rarr; tap Submit. Your vNIN will be generated instantly.</p>
-                <p><strong>Option B  USSD (no app needed):</strong> Dial
+                <p><strong>Option B — USSD (no app needed):</strong> Dial
                   <strong>*346*3*Your NIN*715461#</strong> and an SMS with your vNIN will be sent to you.</p>
               </details>
             </div>
@@ -217,14 +217,14 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
               <span class="error-msg">Please enter the property address.</span>
             </div>
 
-            <div class="form-group" id="group-location">
+            <div class="form-group" id="group-location" style="overflow:visible;">
               <label>Pin the Exact Property Location</label>
               <p style="margin:0 0 10px; color:var(--cea-muted); font-size:13px;">
                 Click anywhere on the map to drop a pin on the property, or use your
                 current location. This gives us the exact GPS coordinates for verification.
               </p>
               <button type="button" class="btn-light" id="useMyLocationBtn" style="background:var(--cea-navy); margin-bottom:10px;">Use My Current Location</button>
-              <div id="locationMap" style="width:100%; height:300px; border-radius:8px; border:1px solid #e3e7ed;"></div>
+              <div id="locationMap" style="width:100%; height:300px; border:1px solid #e3e7ed; position:relative; overflow:hidden; z-index:0;"></div>
               <p id="locationStatus" style="margin:10px 0 0; font-size:13px; color:var(--cea-muted);">No pin dropped yet.</p>
               <input type="hidden" id="latitude" name="latitude" />
               <input type="hidden" id="longitude" name="longitude" />
@@ -239,7 +239,7 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
 
             <div class="form-group" id="group-description">
               <label for="description">Property Description</label>
-              <textarea id="description" name="description" rows="4" placeholder="Describe the property  size, features, condition, etc."></textarea>
+              <textarea id="description" name="description" rows="4" placeholder="Describe the property — size, features, condition, etc."></textarea>
               <span class="error-msg">Please add a short description.</span>
             </div>
 
