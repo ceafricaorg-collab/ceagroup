@@ -216,9 +216,9 @@
           var step3 = document.getElementById("step3Section");
           if (step2) {
             step2.classList.remove("hidden");
-            // Map container was hidden on init — resize so it renders correctly
+            // Init the map now that its container is visible (lazy init avoids blank-map bug)
             setTimeout(function () {
-              if (typeof window.ceaMapResize === "function") window.ceaMapResize();
+              if (typeof window.ceaShowMap === "function") window.ceaShowMap();
               step2.scrollIntoView({ behavior: "smooth", block: "start" });
             }, 150);
           }
@@ -307,11 +307,12 @@
           description: "Listing fee for property submission",
         },
         callback: function (response) {
-          // Flutterwave returns "successful" in live mode and sometimes "completed" in test mode
+          // Keep the status check — only mark paid on confirmed success.
+          // The Worker also verifies server-side, but we want to block here too.
           var ok = response.status === "successful" || response.status === "completed";
           if (!ok) {
             paymentStatusEl.className = "form-status failure";
-            paymentStatusEl.textContent = "Payment was not completed. Please try again.";
+            paymentStatusEl.textContent = "Payment was not completed (status: " + (response.status || "unknown") + "). Please try again.";
             return;
           }
           paymentRef = String(response.transaction_id || response.flw_ref || txRef);
@@ -341,13 +342,14 @@
           updateSubmitGate();
         },
         onclose: function () {
-          // onclose fires after callback too — only show error if payment was not captured
+          // onclose fires after every modal close, including after a successful callback.
+          // Wait 1 s to give callback time to set paymentRef before we decide it's missing.
           setTimeout(function () {
             if (paymentRef === null) {
               paymentStatusEl.className = "form-status failure";
-              paymentStatusEl.textContent = "Payment window closed before completion. Please try again.";
+              paymentStatusEl.textContent = "Payment window closed. If you completed the payment, please wait a moment and try clicking the Pay button again.";
             }
-          }, 300);
+          }, 1000);
         },
       });
     });
