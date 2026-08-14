@@ -6,8 +6,8 @@
     var pos = { lat: lat, lng: lng };
     if (!marker) {
       marker = new google.maps.Marker({
-        position: pos,
-        map: map,
+        position:  pos,
+        map:       map,
         draggable: true,
         optimized: false,
         animation: google.maps.Animation.DROP,
@@ -26,7 +26,7 @@
   function updateFields(lat, lng) {
     var latInput = document.getElementById("latitude");
     var lngInput = document.getElementById("longitude");
-    var status = document.getElementById("locationStatus");
+    var status   = document.getElementById("locationStatus");
     if (latInput) latInput.value = lat;
     if (lngInput) lngInput.value = lng;
     if (status) {
@@ -37,15 +37,14 @@
     if (group) group.classList.remove("has-error");
   }
 
-  // Called by Google Maps SDK once the API has loaded.
-  // By this point the map container is guaranteed visible (step2 was revealed before this script loaded).
+  // Called by Google Maps SDK once loaded. Map container is always in the DOM.
   window.initLocationMap = function () {
     var mapEl = document.getElementById("locationMap");
     if (!mapEl) return;
 
     map = new google.maps.Map(mapEl, {
-      center: DEFAULT_CENTER,
-      zoom: 6,
+      center:          DEFAULT_CENTER,
+      zoom:            6,
       gestureHandling: "greedy",
     });
 
@@ -71,7 +70,4 @@
       });
     }
   };
-
-  // No-op kept for backwards compatibility — not needed with dynamic loading.
-  window.ceaShowMap = function () {};
 })();

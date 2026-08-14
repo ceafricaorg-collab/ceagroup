@@ -34,6 +34,72 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
+<style>
+  .step-progress { display:flex; align-items:center; margin-bottom:32px; }
+  .step-item { display:flex; flex-direction:column; align-items:center; gap:6px; flex-shrink:0; }
+  .step-circle {
+    width:36px; height:36px; border-radius:50%;
+    background:#e3e7ed; color:#9aa5b4;
+    font-size:14px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+    transition: background 0.3s, color 0.3s;
+  }
+  .step-text { font-size:11px; font-weight:600; color:#9aa5b4; text-align:center; white-space:nowrap; transition:color 0.3s; }
+  .step-item.active .step-circle { background:var(--cea-navy); color:#fff; }
+  .step-item.active .step-text { color:var(--cea-navy); }
+  .step-item.done .step-circle { background:var(--cea-green); color:#fff; }
+  .step-item.done .step-circle::after { content:'✓'; }
+  .step-item.done .step-circle .step-num { display:none; }
+  .step-item.done .step-text { color:var(--cea-green); }
+  .step-connector { flex:1; height:2px; background:#e3e7ed; margin:0 8px; margin-bottom:22px; transition:background 0.3s; }
+  .step-connector.done { background:var(--cea-green); }
+
+  .form-section-divider {
+    border:none; border-top:2px solid #e3e7ed;
+    margin:28px 0 24px;
+  }
+  .form-section-label {
+    font-size:11px; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--cea-muted);
+    margin:0 0 16px;
+  }
+
+  /* Lock overlay on property section until identity verified */
+  #propertySection {
+    position:relative;
+    transition: opacity 0.3s;
+  }
+  #propertySection.locked {
+    opacity:0.4;
+    pointer-events:none;
+    user-select:none;
+  }
+  #paymentSection {
+    position:relative;
+    transition: opacity 0.3s;
+  }
+  #paymentSection.locked {
+    opacity:0.4;
+    pointer-events:none;
+    user-select:none;
+  }
+
+  .identity-verified-banner {
+    background:linear-gradient(135deg,#eafaf1,#d5f5e3);
+    border:1.5px solid var(--cea-green);
+    border-radius:10px;
+    padding:14px 18px;
+    margin-bottom:20px;
+    display:none;
+    align-items:center;
+    gap:10px;
+    font-size:14px;
+    color:#1a5c35;
+    font-weight:600;
+  }
+  .identity-verified-banner.visible { display:flex; }
+</style>
 </head>
 <body>
 
@@ -84,121 +150,84 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
       <!-- Step progress indicator -->
       <div class="step-progress" id="stepProgress">
         <div class="step-item active" id="stepItem1">
-          <div class="step-circle">1</div>
+          <div class="step-circle"><span class="step-num">1</span></div>
           <div class="step-text">Verify Identity</div>
         </div>
         <div class="step-connector" id="stepConn1"></div>
         <div class="step-item" id="stepItem2">
-          <div class="step-circle">2</div>
+          <div class="step-circle"><span class="step-num">2</span></div>
           <div class="step-text">Property Details</div>
         </div>
         <div class="step-connector" id="stepConn2"></div>
         <div class="step-item" id="stepItem3">
-          <div class="step-circle">3</div>
+          <div class="step-circle"><span class="step-num">3</span></div>
           <div class="step-text">Payment &amp; Submit</div>
         </div>
       </div>
-
-      <style>
-        .step-progress { display:flex; align-items:center; margin-bottom:32px; }
-        .step-item { display:flex; flex-direction:column; align-items:center; gap:6px; flex-shrink:0; }
-        .step-circle {
-          width:36px; height:36px; border-radius:50%;
-          background:#e3e7ed; color:#9aa5b4;
-          font-size:14px; font-weight:700;
-          display:flex; align-items:center; justify-content:center;
-          transition: background 0.3s, color 0.3s;
-        }
-        .step-text { font-size:11px; font-weight:600; color:#9aa5b4; text-align:center; white-space:nowrap; transition:color 0.3s; }
-        .step-item.active .step-circle { background:var(--cea-navy); color:#fff; }
-        .step-item.active .step-text { color:var(--cea-navy); }
-        .step-item.done .step-circle { background:var(--cea-green); color:#fff; }
-        .step-item.done .step-circle::after { content:'✓'; }
-        .step-item.done .step-text { color:var(--cea-green); }
-        .step-connector { flex:1; height:2px; background:#e3e7ed; margin:0 8px; margin-bottom:22px; transition:background 0.3s; }
-        .step-connector.done { background:var(--cea-green); }
-
-        .form-step { transition: opacity 0.3s; }
-        .form-step.hidden { display:none; }
-
-        .step-reveal-banner {
-          background: linear-gradient(135deg, #eafaf1, #d5f5e3);
-          border:1.5px solid var(--cea-green);
-          border-radius:10px;
-          padding:16px 20px;
-          margin-bottom:24px;
-          display:flex;
-          align-items:center;
-          gap:12px;
-          font-size:14px;
-          color:#1a5c35;
-          font-weight:600;
-        }
-        .step-reveal-banner .reveal-icon { font-size:22px; flex-shrink:0; }
-      </style>
 
       <div class="lead-card">
         <form id="listingForm" novalidate>
 
           <!-- ── STEP 1: Identity Verification ── -->
-          <div class="form-step" id="step1Section">
-            <p style="font-size:13.5px;color:var(--cea-muted);margin-bottom:20px;">
-              Start by verifying your identity. Enter your details exactly as they appear on your NIN.
-              Once verified, the property details form will unlock.
-            </p>
+          <p class="form-section-label">Step 1 — Verify Your Identity</p>
+          <p style="font-size:13.5px;color:var(--cea-muted);margin-bottom:20px;">
+            Enter your details exactly as they appear on your NIN.
+            Once verified, the property details form will unlock.
+          </p>
 
-            <div class="form-group" id="group-email">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" placeholder="e.g. you@example.com" />
-              <span class="error-msg">Please enter a valid email address.</span>
-            </div>
-
-            <div class="form-group" id="group-firstName">
-              <label for="firstName">First Name</label>
-              <input type="text" id="firstName" name="firstName" placeholder="As it appears on your NIN" />
-              <span class="error-msg">Please enter your first name.</span>
-            </div>
-
-            <div class="form-group" id="group-lastName">
-              <label for="lastName">Last Name</label>
-              <input type="text" id="lastName" name="lastName" placeholder="As it appears on your NIN" />
-              <span class="error-msg">Please enter your last name.</span>
-            </div>
-
-            <div class="form-group" id="group-dob">
-              <label for="dob">Date of Birth</label>
-              <input type="date" id="dob" name="dob" />
-              <span class="error-msg">Please enter your date of birth.</span>
-            </div>
-
-            <div class="form-group" id="group-vnin">
-              <label for="vnin">Virtual NIN (vNIN)</label>
-              <input type="text" id="vnin" name="vnin" placeholder="e.g. JZ426633988976CH" />
-              <span class="error-msg">Please enter your Virtual NIN.</span>
-              <details class="faq-item" style="margin-top:10px; box-shadow:none; border:1px solid #e3e7ed;">
-                <summary>Don't have a vNIN yet? Here's how to get one</summary>
-                <p>
-                  A vNIN is a temporary, shareable version of your NIN that protects your actual
-                  NIN number. You can generate one for free in under a minute:
-                </p>
-                <p><strong>Option A — NIMC Mobile App:</strong> Download the NIMC app &rarr;
-                  tap "Get Virtual NIN" &rarr; choose "Input Enterprise short-code" &rarr;
-                  enter <strong>715461</strong> &rarr; tap Submit. Your vNIN will be generated instantly.</p>
-                <p><strong>Option B — USSD (no app needed):</strong> Dial
-                  <strong>*346*3*Your NIN*715461#</strong> and an SMS with your vNIN will be sent to you.</p>
-              </details>
-            </div>
-
-            <button type="button" class="btn-submit" id="verifyIdentityBtn" style="background:var(--cea-navy);">Verify My Identity</button>
-            <div class="form-status" id="identityStatus"></div>
+          <div class="form-group" id="group-email">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="e.g. you@example.com" />
+            <span class="error-msg">Please enter a valid email address.</span>
           </div>
 
-          <!-- ── STEP 2: Property Details (hidden until identity verified) ── -->
-          <div class="form-step hidden" id="step2Section">
-            <div class="step-reveal-banner">
-              <span class="reveal-icon">&#10003;</span>
+          <div class="form-group" id="group-firstName">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" placeholder="As it appears on your NIN" />
+            <span class="error-msg">Please enter your first name.</span>
+          </div>
+
+          <div class="form-group" id="group-lastName">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" placeholder="As it appears on your NIN" />
+            <span class="error-msg">Please enter your last name.</span>
+          </div>
+
+          <div class="form-group" id="group-dob">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" />
+            <span class="error-msg">Please enter your date of birth.</span>
+          </div>
+
+          <div class="form-group" id="group-vnin">
+            <label for="vnin">Virtual NIN (vNIN)</label>
+            <input type="text" id="vnin" name="vnin" placeholder="e.g. JZ426633988976CH" />
+            <span class="error-msg">Please enter your Virtual NIN.</span>
+            <details class="faq-item" style="margin-top:10px; box-shadow:none; border:1px solid #e3e7ed;">
+              <summary>Don't have a vNIN yet? Here's how to get one</summary>
+              <p>
+                A vNIN is a temporary, shareable version of your NIN that protects your actual
+                NIN number. You can generate one for free in under a minute:
+              </p>
+              <p><strong>Option A — NIMC Mobile App:</strong> Download the NIMC app &rarr;
+                tap "Get Virtual NIN" &rarr; choose "Input Enterprise short-code" &rarr;
+                enter <strong>715461</strong> &rarr; tap Submit. Your vNIN will be generated instantly.</p>
+              <p><strong>Option B — USSD (no app needed):</strong> Dial
+                <strong>*346*3*Your NIN*715461#</strong> and an SMS with your vNIN will be sent to you.</p>
+            </details>
+          </div>
+
+          <button type="button" class="btn-submit" id="verifyIdentityBtn" style="background:var(--cea-navy);">Verify My Identity</button>
+          <div class="form-status" id="identityStatus"></div>
+
+          <!-- ── STEP 2: Property Details (locked until identity verified) ── -->
+          <hr class="form-section-divider" />
+          <div id="propertySection" class="locked">
+            <div class="identity-verified-banner" id="verifiedBanner">
+              <span style="font-size:20px;">&#10003;</span>
               Identity verified! Now tell us about the property.
             </div>
+            <p class="form-section-label">Step 2 — Property Details</p>
 
             <div class="form-group" id="group-propertyType">
               <label for="propertyType">Property Type</label>
@@ -217,14 +246,14 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
               <span class="error-msg">Please enter the property address.</span>
             </div>
 
-            <div class="form-group" id="group-location" style="overflow:visible;">
+            <div class="form-group" id="group-location">
               <label>Pin the Exact Property Location</label>
               <p style="margin:0 0 10px; color:var(--cea-muted); font-size:13px;">
                 Click anywhere on the map to drop a pin on the property, or use your
                 current location. This gives us the exact GPS coordinates for verification.
               </p>
               <button type="button" class="btn-light" id="useMyLocationBtn" style="background:var(--cea-navy); margin-bottom:10px;">Use My Current Location</button>
-              <div id="locationMap" style="width:100%; height:300px; border:1px solid #e3e7ed; position:relative; overflow:hidden; z-index:0;"></div>
+              <div id="locationMap" style="width:100%; height:300px; border:1px solid #e3e7ed; border-radius:8px;"></div>
               <p id="locationStatus" style="margin:10px 0 0; font-size:13px; color:var(--cea-muted);">No pin dropped yet.</p>
               <input type="hidden" id="latitude" name="latitude" />
               <input type="hidden" id="longitude" name="longitude" />
@@ -261,8 +290,10 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
             </div>
           </div>
 
-          <!-- ── STEP 3: Payment & Submit (hidden until identity verified) ── -->
-          <div class="form-step hidden" id="step3Section">
+          <!-- ── STEP 3: Payment & Submit (locked until identity verified) ── -->
+          <hr class="form-section-divider" />
+          <div id="paymentSection" class="locked">
+            <p class="form-section-label">Step 3 — Payment &amp; Submit</p>
             <div class="lead-card" id="paymentSummary" style="margin:0 0 20px; padding:20px; background:var(--cea-bg); box-shadow:none; border:1.5px solid #e3e7ed;">
               <h3 style="margin:0 0 6px; font-size:15px;">Listing Fee</h3>
               <p id="paymentAmountText" style="margin:0 0 14px; color:var(--cea-muted); font-size:13.5px;">Calculating fee&hellip;</p>
@@ -308,6 +339,8 @@ src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"
 <script src="https://checkout.flutterwave.com/v3.js"></script>
 <script src="promoconfig.js"></script>
 <script src="promobanner.js"></script>
-<script src="listingform-step1.js"></script>
+<script src="locationpicker.js"></script>
+<script src="listingform.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.55&key=AIzaSyDtn5xX5kV7iz35_4NqY19HmrIYEU4n_aM&callback=initLocationMap" async defer></script>
 </body>
 </html>
