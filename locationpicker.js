@@ -1,8 +1,6 @@
 (function () {
   var DEFAULT_CENTER = { lat: 9.082, lng: 8.6753 }; // Nigeria, roughly centered
   var map, marker;
-  var mapsApiReady = false;
-  var mapInitialized = false;
 
   function setPin(lat, lng) {
     var pos = { lat: lat, lng: lng };
@@ -33,11 +31,12 @@
     if (group) group.classList.remove("has-error");
   }
 
-  function doInitMap() {
-    if (mapInitialized || !mapsApiReady) return;
+  // Google Maps fires this callback when the API loads.
+  // Initialise the map now (even though the container is hidden) so the instance is ready.
+  // The container's zero dimensions at this point are fine — ceaShowMap fixes that on reveal.
+  window.initLocationMap = function () {
     var mapEl = document.getElementById("locationMap");
     if (!mapEl) return;
-    mapInitialized = true;
 
     map = new google.maps.Map(mapEl, { center: DEFAULT_CENTER, zoom: 6 });
 
@@ -65,25 +64,14 @@
         );
       });
     }
-  }
-
-  // Called by Google Maps SDK when it has loaded.
-  // Do NOT init here if the container is hidden — init lazily via ceaShowMap instead.
-  window.initLocationMap = function () {
-    mapsApiReady = true;
-    // Only init now if step 2 is already visible (handles slow network / fast reveal race)
-    var mapEl = document.getElementById("locationMap");
-    if (mapEl && mapEl.offsetParent !== null) {
-      doInitMap();
-    }
   };
 
   // Called by listingform.js after the step-2 container becomes visible.
-  // If Maps API isn't ready yet, doInitMap will run from initLocationMap when it fires.
+  // Trigger resize + setCenter so the map repaints into its now-visible dimensions
+  // and click/marker events work correctly.
   window.ceaShowMap = function () {
-    if (mapsApiReady) {
-      doInitMap();
-    }
-    // else: initLocationMap will call doInitMap once the API arrives
+    if (!map) return;
+    google.maps.event.trigger(map, "resize");
+    map.setCenter(DEFAULT_CENTER);
   };
 })();
