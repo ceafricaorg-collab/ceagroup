@@ -216,9 +216,11 @@
           var step3 = document.getElementById("step3Section");
           if (step2) {
             step2.classList.remove("hidden");
+            // Map container was hidden on init — resize so it renders correctly
             setTimeout(function () {
+              if (typeof window.ceaMapResize === "function") window.ceaMapResize();
               step2.scrollIntoView({ behavior: "smooth", block: "start" });
-            }, 100);
+            }, 150);
           }
           if (step3) step3.classList.remove("hidden");
 
@@ -305,12 +307,14 @@
           description: "Listing fee for property submission",
         },
         callback: function (response) {
-          if (response.status !== "successful") {
+          // Flutterwave returns "successful" in live mode and sometimes "completed" in test mode
+          var ok = response.status === "successful" || response.status === "completed";
+          if (!ok) {
             paymentStatusEl.className = "form-status failure";
             paymentStatusEl.textContent = "Payment was not completed. Please try again.";
             return;
           }
-          paymentRef = String(response.transaction_id);
+          paymentRef = String(response.transaction_id || response.flw_ref || txRef);
           paymentStatusEl.className = "form-status success";
           paymentStatusEl.textContent = "Payment received. Reference: " + txRef;
           payBtn.textContent = "Paid ✓";
@@ -337,10 +341,13 @@
           updateSubmitGate();
         },
         onclose: function () {
-          if (paymentRef === null) {
-            paymentStatusEl.className = "form-status failure";
-            paymentStatusEl.textContent = "Payment window closed before completion.";
-          }
+          // onclose fires after callback too — only show error if payment was not captured
+          setTimeout(function () {
+            if (paymentRef === null) {
+              paymentStatusEl.className = "form-status failure";
+              paymentStatusEl.textContent = "Payment window closed before completion. Please try again.";
+            }
+          }, 300);
         },
       });
     });
