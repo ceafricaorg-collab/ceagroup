@@ -106,15 +106,9 @@
   });
 
   function onIdentityVerified() {
-    // Unlock property and payment sections
-    var propSec = document.getElementById("propertySection");
-    var paySec  = document.getElementById("paymentSection");
-    if (propSec) propSec.classList.remove("locked");
-    if (paySec)  paySec.classList.remove("locked");
-
     // Show verified banner
     var banner = document.getElementById("verifiedBanner");
-    if (banner) banner.classList.add("visible");
+    if (banner) banner.classList.add("show");
 
     // Advance step indicator
     var s1 = document.getElementById("stepItem1");
@@ -124,9 +118,10 @@
     if (s2) s2.classList.add("active");
     if (c1) c1.classList.add("done");
 
-    // Scroll to property section
-    if (propSec) setTimeout(function () {
-      propSec.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Scroll down to property section
+    var hr = document.querySelector(".form-section-divider");
+    if (hr) setTimeout(function () {
+      hr.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 150);
 
     updateSubmitGate();
