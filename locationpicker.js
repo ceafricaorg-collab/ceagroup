@@ -1,19 +1,15 @@
 (function () {
   var DEFAULT_CENTER = { lat: 9.082, lng: 8.6753 };
   var map, marker;
-  var mapsApiReady = false;
-  var mapInitialized = false;
-  var showMapRequested = false; // tracks whether ceaShowMap was called before API was ready
 
   function setPin(lat, lng) {
-    if (!map) return;
     var pos = { lat: lat, lng: lng };
     if (!marker) {
       marker = new google.maps.Marker({
         position: pos,
         map: map,
         draggable: true,
-        optimized: false, // renders as DOM element, more reliable than canvas
+        optimized: false,
         animation: google.maps.Animation.DROP,
       });
       marker.addListener("dragend", function () {
@@ -41,11 +37,11 @@
     if (group) group.classList.remove("has-error");
   }
 
-  function doInitMap() {
-    if (mapInitialized) return;
+  // Called by Google Maps SDK once the API has loaded.
+  // By this point the map container is guaranteed visible (step2 was revealed before this script loaded).
+  window.initLocationMap = function () {
     var mapEl = document.getElementById("locationMap");
     if (!mapEl) return;
-    mapInitialized = true;
 
     map = new google.maps.Map(mapEl, {
       center: DEFAULT_CENTER,
@@ -74,24 +70,8 @@
         );
       });
     }
-  }
-
-  // Called by Google Maps SDK when the API has loaded.
-  window.initLocationMap = function () {
-    mapsApiReady = true;
-    // If ceaShowMap was already called (step 2 revealed before API finished loading),
-    // init the map now.
-    if (showMapRequested) {
-      doInitMap();
-    }
   };
 
-  // Called by listingform.js after step-2 is visible.
-  window.ceaShowMap = function () {
-    showMapRequested = true;
-    if (mapsApiReady) {
-      doInitMap();
-    }
-    // else: initLocationMap will call doInitMap when API finishes loading
-  };
+  // No-op kept for backwards compatibility — not needed with dynamic loading.
+  window.ceaShowMap = function () {};
 })();
