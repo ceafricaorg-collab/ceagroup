@@ -3,6 +3,7 @@
   var map, marker;
   var mapsApiReady = false;
   var mapInitialized = false;
+  var showMapRequested = false; // tracks whether ceaShowMap was called before API was ready
 
   function setPin(lat, lng) {
     if (!map) return;
@@ -12,6 +13,7 @@
         position: pos,
         map: map,
         draggable: true,
+        optimized: false, // renders as DOM element, more reliable than canvas
         animation: google.maps.Animation.DROP,
       });
       marker.addListener("dragend", function () {
@@ -39,27 +41,11 @@
     if (group) group.classList.remove("has-error");
   }
 
-  // Google Maps API ready — store flag only. Do NOT init here:
-  // the map container is display:none at page load, creating a broken zero-size instance.
-  window.initLocationMap = function () {
-    mapsApiReady = true;
-  };
-
-  // Called by listingform.js 300ms after step-2 becomes visible.
-  // By this point the container has real pixel dimensions.
-  window.ceaShowMap = function () {
-    if (mapInitialized || !mapsApiReady) return;
-    mapInitialized = true;
-
+  function doInitMap() {
+    if (mapInitialized) return;
     var mapEl = document.getElementById("locationMap");
     if (!mapEl) return;
-
-    // Ensure no parent CSS is swallowing pointer events or clipping markers
-    mapEl.style.pointerEvents = "auto";
-    mapEl.style.position = "relative";
-    mapEl.style.overflow = "hidden";
-    mapEl.style.zIndex = "0";
-    if (mapEl.parentElement) mapEl.parentElement.style.overflow = "visible";
+    mapInitialized = true;
 
     map = new google.maps.Map(mapEl, {
       center: DEFAULT_CENTER,
@@ -71,19 +57,16 @@
       setPin(e.latLng.lat(), e.latLng.lng());
     });
 
-    var useMyLocationBtn = document.getElementById("useMyLocationBtn");
-    if (useMyLocationBtn) {
-      useMyLocationBtn.addEventListener("click", function () {
+    var btn = document.getElementById("useMyLocationBtn");
+    if (btn) {
+      btn.addEventListener("click", function () {
         if (!navigator.geolocation) {
           var s = document.getElementById("locationStatus");
           if (s) s.textContent = "Geolocation is not supported by your browser.";
           return;
         }
         navigator.geolocation.getCurrentPosition(
-          function (pos) {
-            map.setZoom(16);
-            setPin(pos.coords.latitude, pos.coords.longitude);
-          },
+          function (pos) { map.setZoom(16); setPin(pos.coords.latitude, pos.coords.longitude); },
           function () {
             var s = document.getElementById("locationStatus");
             if (s) s.textContent = "Couldn't get your location. Please drop a pin manually.";
@@ -91,5 +74,24 @@
         );
       });
     }
+  }
+
+  // Called by Google Maps SDK when the API has loaded.
+  window.initLocationMap = function () {
+    mapsApiReady = true;
+    // If ceaShowMap was already called (step 2 revealed before API finished loading),
+    // init the map now.
+    if (showMapRequested) {
+      doInitMap();
+    }
+  };
+
+  // Called by listingform.js after step-2 is visible.
+  window.ceaShowMap = function () {
+    showMapRequested = true;
+    if (mapsApiReady) {
+      doInitMap();
+    }
+    // else: initLocationMap will call doInitMap when API finishes loading
   };
 })();
