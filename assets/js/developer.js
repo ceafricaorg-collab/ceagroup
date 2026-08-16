@@ -20,6 +20,14 @@
       .replace(/'/g, "&#39;");
   }
 
+  function normalizeDriveUrl(url) {
+    if (!url) return "";
+    // Convert any Google Drive sharing/view URL to a thumbnail embed URL
+    var m = url.match(/[?&]id=([A-Za-z0-9_-]+)/) || url.match(/\/d\/([A-Za-z0-9_-]+)/);
+    if (m) return "https://drive.google.com/thumbnail?id=" + m[1] + "&sz=w400";
+    return url;
+  }
+
   function fmtPrice(price) {
     return price
       ? "&#8358;" + Number(price).toLocaleString("en-NG")
@@ -78,9 +86,11 @@
       ? 'background-image:url("' + escHtml(dev.coverPhoto) + '");background-size:cover;background-position:center;'
       : 'background:linear-gradient(135deg,#11214f,#0a1733);';
 
-    var logoHtml = (dev.logoUrl || dev.logo)
-      ? '<img src="' + escHtml(dev.logoUrl || dev.logo) + '" alt="' + escHtml(dev.name) + ' logo" class="dev-logo-img" />'
-      : '<div class="dev-logo-placeholder">' + escHtml((dev.name || "?")[0].toUpperCase()) + '</div>';
+    var logoSrc = normalizeDriveUrl(dev.logoUrl || dev.logo || "");
+    var logoFallback = escHtml((dev.name || "?")[0].toUpperCase());
+    var logoHtml = logoSrc
+      ? '<img src="' + escHtml(logoSrc) + '" alt="' + escHtml(dev.name) + ' logo" class="dev-logo-img" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\';" /><div class="dev-logo-placeholder" style="display:none;">' + logoFallback + '</div>'
+      : '<div class="dev-logo-placeholder">' + logoFallback + '</div>';
 
     var socialHtml = "";
     if (dev.socialLinks) {
