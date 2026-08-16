@@ -21,6 +21,19 @@
     formSection.style.display  = "block";
   }
 
+  // Renewal link: listing.html?renew=1&id=...&e=...&exp=...&sig=...
+  // Hand off to the worker which validates the HMAC and redirects back with a fresh token.
+  if (params.get("renew") === "1") {
+    var renewQuery = new URLSearchParams({
+      id:  params.get("id")  || "",
+      e:   params.get("e")   || "",
+      exp: params.get("exp") || "",
+      sig: params.get("sig") || "",
+    });
+    window.location.href = WORKER_BASE_URL + "/renew-link?" + renewQuery.toString();
+    return;
+  }
+
   if (!token) { showExpired(); return; }
 
   fetch(WORKER_BASE_URL + "/verify-token?token=" + encodeURIComponent(token))
