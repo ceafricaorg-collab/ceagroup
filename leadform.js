@@ -52,9 +52,12 @@
     }
 
     const payload = {
+      source: "property_listing_lead",
       fullName: fields.fullName.input.value.trim(),
       phone: fields.phone.input.value.trim(),
       email: fields.email.input.value.trim(),
+      submittedAt: new Date().toISOString(),
+      page: window.location.href,
     };
 
     submitBtn.disabled = true;
