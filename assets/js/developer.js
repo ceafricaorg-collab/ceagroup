@@ -78,8 +78,8 @@
       ? 'background-image:url("' + escHtml(dev.coverPhoto) + '");background-size:cover;background-position:center;'
       : 'background:linear-gradient(135deg,#11214f,#0a1733);';
 
-    var logoHtml = dev.logo
-      ? '<img src="' + escHtml(dev.logo) + '" alt="' + escHtml(dev.name) + ' logo" class="dev-logo-img" />'
+    var logoHtml = (dev.logoUrl || dev.logo)
+      ? '<img src="' + escHtml(dev.logoUrl || dev.logo) + '" alt="' + escHtml(dev.name) + ' logo" class="dev-logo-img" />'
       : '<div class="dev-logo-placeholder">' + escHtml((dev.name || "?")[0].toUpperCase()) + '</div>';
 
     var socialHtml = "";
