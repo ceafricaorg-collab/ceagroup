@@ -266,7 +266,7 @@
         <a href="developers.html" aria-current="page">Developers</a>
         <a href="index.html#how-it-works">How It Works</a>
         <a href="index.html#trust">Why CEA</a>
-        <a href="list.html" class="nav-cta">List Your Property</a>
+        <a href="listing.html" class="nav-cta">List Your Property</a>
       </div>
       <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span><span></span>
@@ -310,14 +310,14 @@
   <section class="devdir-partner-strip">
     <div class="container">
       <h2>List Your Portfolio with CEA</h2>
-      <p>Real estate companies with 20+ properties get a dedicated partner page on the CEA marketplace  at no extra cost.</p>
+      <p>Real estate companies with 20+ properties get a dedicated partner page on the CEA marketplace — at no extra cost.</p>
       <ul>
         <li>Dedicated partner profile page</li>
         <li>All listings on the main marketplace</li>
         <li>CEA Verified badge on every property</li>
         <li>Promoted to serious, identity-verified buyers</li>
       </ul>
-      <a href="list.html" class="devdir-partner-cta">Start Listing Your Properties</a>
+      <a href="listing.html" class="devdir-partner-cta">Start Listing Your Properties</a>
       <p class="devdir-partner-note">Contact us at <a href="mailto:info@ceagroup.org" style="color:rgba(255,255,255,0.6);">info@ceagroup.org</a> to discuss a bulk partnership agreement.</p>
     </div>
   </section>
@@ -382,8 +382,8 @@
     var coverHtml = dev.coverPhoto
       ? '<img src="' + escHtml(dev.coverPhoto) + '" alt="" loading="lazy" />'
       : "";
-    var logoHtml = dev.logo
-      ? '<img src="' + escHtml(dev.logo) + '" alt="' + escHtml(dev.name) + '" class="devdir-card-logo" />'
+    var logoHtml = (dev.logoUrl || dev.logo)
+      ? '<img src="' + escHtml(dev.logoUrl || dev.logo) + '" alt="' + escHtml(dev.name) + '" class="devdir-card-logo" />'
       : '<div class="devdir-card-logo-placeholder">' + escHtml((dev.name || "?")[0].toUpperCase()) + '</div>';
 
     var desc = (dev.description || "").substring(0, 160);
